@@ -23,7 +23,9 @@ const ProfilePage: React.FC = () => {
     username: '',
     email: '',
   });
-  const [errors, setErrors] = useState<{ username?: string; email?: string }>({});
+  const [errors, setErrors] = useState<{ username?: string; email?: string }>(
+    {}
+  );
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -69,7 +71,8 @@ const ProfilePage: React.FC = () => {
     const newErrors: { username?: string; email?: string } = {};
     if (!formData.username.trim()) newErrors.username = 'Username is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      newErrors.email = 'Invalid email format';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -87,7 +90,7 @@ const ProfilePage: React.FC = () => {
     try {
       const response = await apiClient.updateProfile(formData);
       if (response.success && response.data) {
-        setProfile(prev => prev ? { ...prev, ...response.data } : null);
+        setProfile((prev) => (prev ? { ...prev, ...response.data } : null));
         setEditing(false);
         toast.success('Profile updated successfully');
       } else {
@@ -110,16 +113,16 @@ const ProfilePage: React.FC = () => {
    */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#004C3F] mx-auto"></div>
-          <p className="mt-4 text-gray-600 text-lg">Loading your profile...</p>
+      <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[#004C3F] mx-auto'></div>
+          <p className='mt-4 text-gray-600 text-lg'>Loading your profile...</p>
         </div>
       </div>
     );
@@ -128,122 +131,148 @@ const ProfilePage: React.FC = () => {
   // Error state
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600">Failed to load profile</p>
+      <div className='min-h-screen bg-gray-50 flex items-center justify-center'>
+        <div className='text-center'>
+          <p className='text-gray-600'>Failed to load profile</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="bg-blue-600 text-white px-4 sm:px-6 py-4">
-            <h1 className="text-xl sm:text-2xl font-bold">User Profile</h1>
+    <div className='min-h-screen bg-gray-50'>
+      <div className='max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+        <div className='bg-white rounded-lg shadow-md overflow-hidden'>
+          <div className='bg-blue-600 text-white px-4 sm:px-6 py-4'>
+            <h1 className='text-xl sm:text-2xl font-bold'>User Profile</h1>
           </div>
 
-          <div className="p-4 sm:p-6">
+          <div className='p-4 sm:p-6'>
             {editing ? (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className='space-y-6'>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
                     Username
                   </label>
                   <input
-                    type="text"
-                    name="username"
+                    type='text'
+                    name='username'
                     value={formData.username}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors'
                     required
                   />
-                  {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+                  {errors.username && (
+                    <p className='text-red-500 text-sm mt-1'>
+                      {errors.username}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className='block text-sm font-medium text-gray-700 mb-2'>
                     Email
                   </label>
                   <input
-                    type="email"
-                    name="email"
+                    type='email'
+                    name='email'
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                    className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors'
                     required
                   />
-                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p className='text-red-500 text-sm mt-1'>{errors.email}</p>
+                  )}
                 </div>
 
-                {submitError && <p className="text-red-500 text-sm">{submitError}</p>}
+                {submitError && (
+                  <p className='text-red-500 text-sm'>{submitError}</p>
+                )}
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className='flex flex-col sm:flex-row gap-4'>
                   <button
-                    type="submit"
+                    type='submit'
                     disabled={saving}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                    className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors'
                   >
                     {saving ? 'Saving...' : 'Save Changes'}
                   </button>
                   <button
-                    type="button"
+                    type='button'
                     onClick={() => setEditing(false)}
-                    className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+                    className='bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors'
                   >
                     Cancel
                   </button>
                 </div>
               </form>
             ) : (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className='space-y-6'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">Profile Information</h2>
-                    <div className="space-y-3">
+                    <h2 className='text-lg font-semibold text-gray-900 mb-4'>
+                      Profile Information
+                    </h2>
+                    <div className='space-y-3'>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Username</label>
-                        <p className="text-gray-900">{profile.username}</p>
+                        <label className='block text-sm font-medium text-gray-500'>
+                          Username
+                        </label>
+                        <p className='text-gray-900'>{profile.username}</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Email</label>
-                        <p className="text-gray-900">{profile.email}</p>
+                        <label className='block text-sm font-medium text-gray-500'>
+                          Email
+                        </label>
+                        <p className='text-gray-900'>{profile.email}</p>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">User ID</label>
-                        <p className="text-gray-900">{profile.id}</p>
+                        <label className='block text-sm font-medium text-gray-500'>
+                          User ID
+                        </label>
+                        <p className='text-gray-900'>{profile.id}</p>
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">Statistics</h2>
-                    <div className="space-y-3">
+                    <h2 className='text-lg font-semibold text-gray-900 mb-4'>
+                      Statistics
+                    </h2>
+                    <div className='space-y-3'>
                       <div>
-                        <label className="block text-sm font-medium text-gray-500">Courses Created</label>
-                        <p className="text-gray-900">{profile.coursesCreated}</p>
+                        <label className='block text-sm font-medium text-gray-500'>
+                          Courses Created
+                        </label>
+                        <p className='text-gray-900'>
+                          {profile.coursesCreated}
+                        </p>
                       </div>
                       {profile.lastLogin && (
                         <div>
-                          <label className="block text-sm font-medium text-gray-500">Last Login</label>
-                          <p className="text-gray-900">{new Date(profile.lastLogin).toLocaleString()}</p>
+                          <label className='block text-sm font-medium text-gray-500'>
+                            Last Login
+                          </label>
+                          <p className='text-gray-900'>
+                            {new Date(profile.lastLogin).toLocaleString()}
+                          </p>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className='flex flex-col sm:flex-row gap-4'>
                   <button
                     onClick={() => setEditing(true)}
-                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                    className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors'
                   >
                     Edit Profile
                   </button>
                   <button
                     onClick={logout}
-                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
+                    className='bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors'
                   >
                     Logout
                   </button>
