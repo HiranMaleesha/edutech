@@ -4,7 +4,7 @@ import type { Course, LoginRequest, AuthResponse, ApiResponse, ProfileData, Upda
  * Base URL for API endpoints.
  * In production, this should be configurable via environment variables.
  */
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 
 /**
  * API client class for handling all HTTP requests to the backend.
